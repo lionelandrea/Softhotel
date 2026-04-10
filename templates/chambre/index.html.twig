@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chambres - SoftHotel{% endblock %}
+
+{% block body %}
+    <section class="section">
+        <h1>Nos chambres</h1>
+
+        <div class="grid-3 mt-30">
+            {% for chambre in chambres %}
+                <div class="card">
+                    <div class="img-placeholder">Image</div>
+                    <h3 class="mt-20">Chambre {{ chambre.numeroChambre }}</h3>
+                    <p>Type : {{ chambre.typeChambre ? chambre.typeChambre.nomType : 'Non défini' }}</p>
+                    <p>Prix : {{ chambre.typeChambre ? chambre.typeChambre.prixParNuit : 0 }} FCFA / nuit</p>
+
+                    <div class="actions mt-20">
+                        <a href="{{ path('app_chambre_show', {'id': chambre.id}) }}" class="btn btn-light">Détails</a>
+                        <a href="{{ path('app_reservation_new', {'id': chambre.id}) }}" class="btn">Réserver</a>
+                    </div>
+                </div>
+            {% else %}
+                <p>Aucune chambre disponible.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

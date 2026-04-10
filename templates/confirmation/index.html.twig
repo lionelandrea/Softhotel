@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation - SoftHotel{% endblock %}
+
+{% block body %}
+    <section class="section text-center">
+        <h1>Paiement confirmé</h1>
+        <p class="mt-20">Votre réservation a été enregistrée avec succès.</p>
+        <p class="mt-20"><strong>Référence paiement :</strong> #{{ paiement.id }}</p>
+
+        <div class="mt-30">
+            <a href="{{ path('app_home') }}" class="btn">Retour à l'accueil</a>
+        </div>
+    </section>
+{% endblock %}

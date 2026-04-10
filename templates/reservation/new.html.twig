@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation - SoftHotel{% endblock %}
+
+{% block body %}
+    <section class="section">
+        <h1 class="text-center">Réservez votre Chambre</h1>
+
+        <div class="grid-2 mt-30">
+            <div class="img-placeholder" style="height: 260px;">Image</div>
+
+            <div>
+                <h2>Chambre sélectionnée</h2>
+                <p><strong>Nom :</strong> Chambre {{ chambre.numeroChambre }}</p>
+                <p><strong>Description :</strong> {{ chambre.typeChambre ? chambre.typeChambre.nomType : 'Type non défini' }}</p>
+                <p><strong>Prix par nuit :</strong> {{ chambre.typeChambre ? chambre.typeChambre.prixParNuit : 0 }} FCFA</p>
+            </div>
+        </div>
+
+        <form class="mt-30">
+            <div class="form-row">
+                <input type="date" name="date_arrivee">
+                <input type="date" name="date_depart">
+                <input type="number" min="1" name="nb_personnes" placeholder="Nombre de personnes">
+                <input type="text" name="nom" placeholder="Nom">
+            </div>
+
+            <div class="form-row mt-20">
+                <input type="email" name="email" placeholder="Email">
+                <input type="text" name="telephone" placeholder="Téléphone">
+                <div></div>
+                <a href="#" class="btn">Confirmer la réservation</a>
+            </div>
+        </form>
+    </section>
+{% endblock %}

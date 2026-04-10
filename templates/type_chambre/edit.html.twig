@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TypeChambre{% endblock %}
+
+{% block body %}
+    <h1>Edit TypeChambre</h1>
+
+    {{ include('type_chambre/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_type_chambre_index') }}">back to list</a>
+
+    {{ include('type_chambre/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New TypeChambre{% endblock %}
+
+{% block body %}
+    <h1>Create new TypeChambre</h1>
+
+    {{ include('type_chambre/_form.html.twig') }}
+
+    <a href="{{ path('app_type_chambre_index') }}">back to list</a>
+{% endblock %}

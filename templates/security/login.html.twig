@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<section class="section" style="max-width: 500px; margin: 40px auto;">
+    <h1 class="text-center">Connexion administrateur</h1>
+
+    {% if error %}
+        <div style="background:#ffe5e5; color:#b00020; padding:12px; border-radius:6px; margin-bottom:20px;">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+
+    <form method="post" class="mt-30">
+        <div class="form-group">
+            <label for="username">Email</label>
+            <input type="email" value="{{ last_username }}" name="_username" id="username" required autofocus>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" name="_password" id="password" required>
+        </div>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <div class="mt-20">
+            <button class="btn" type="submit">Se connecter</button>
+        </div>
+    </form>
+
+    <p class="mt-20 text-center">
+        Pas encore de compte ?
+        <a href="{{ path('app_register') }}"><strong>S’inscrire</strong></a>
+    </p>
+</section>
+{% endblock %}

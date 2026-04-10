@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail chambre - SoftHotel{% endblock %}
+
+{% block body %}
+    <section class="section">
+        <div class="grid-2">
+            <div class="img-placeholder" style="height: 300px;">Image</div>
+
+            <div>
+                <h1>Chambre {{ chambre.numeroChambre }}</h1>
+                <p><strong>Type :</strong> {{ chambre.typeChambre ? chambre.typeChambre.nomType : 'Non défini' }}</p>
+                <p><strong>Capacité :</strong> {{ chambre.typeChambre ? chambre.typeChambre.capaciteMax : 0 }} personnes</p>
+                <p><strong>Prix :</strong> {{ chambre.typeChambre ? chambre.typeChambre.prixParNuit : 0 }} FCFA / nuit</p>
+
+                <div class="actions mt-30">
+                    <a href="{{ path('app_reservation_new', {'id': chambre.id}) }}" class="btn">Réserver cette chambre</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

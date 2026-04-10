@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - SoftHotel{% endblock %}
+
+{% block body %}
+    <section class="hero">
+        <h1>Bienvenue sur SoftHotel</h1>
+        <p>Réservez votre chambre en toute simplicité</p>
+
+        <div class="form-row">
+            <input type="date" placeholder="Date d'arrivée">
+            <input type="date" placeholder="Date de départ">
+            <input type="number" min="1" placeholder="Nb. de personne">
+            <a href="{{ path('app_chambre_index') }}" class="btn">Rechercher</a>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="text-center">Chambres populaires</h2>
+        <div class="grid-3 mt-30">
+            {% for chambre in chambres %}
+                <div class="card text-center">
+                    <div class="img-placeholder">Image</div>
+                    <h3 class="mt-20">Chambre {{ chambre.numeroChambre }}</h3>
+                    <p>
+                        {{ chambre.typeChambre ? chambre.typeChambre.nomType : 'Type non défini' }}
+                    </p>
+                    <div class="actions mt-20" style="justify-content:center;">
+                        <a href="{{ path('app_chambre_show', {'id': chambre.id}) }}" class="btn btn-light">Détails</a>
+                    </div>
+                </div>
+            {% else %}
+                <p>Aucune chambre trouvée.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="text-center">Avis Clients</h2>
+        <div class="grid-3 mt-30">
+            <div class="card">
+                <h3>Client 1</h3>
+                <p>Excellent service et chambre très propre.</p>
+            </div>
+            <div class="card">
+                <h3>Client 2</h3>
+                <p>Réservation simple et accueil chaleureux.</p>
+            </div>
+            <div class="card">
+                <h3>Client 3</h3>
+                <p>Très bon rapport qualité-prix.</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}
