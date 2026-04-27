@@ -24,13 +24,14 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
 
         yield MenuItem::section('Gestion');
 
         yield MenuItem::linkToRoute('Clients', 'fa fa-users', 'app_client_index');
+        yield MenuItem::linkToRoute('Types de chambres', 'fa fa-layer-group', 'app_type_chambre_index');
         yield MenuItem::linkToRoute('Chambres', 'fa fa-bed', 'app_chambre_index');
-        yield MenuItem::linkToRoute('Réservations', 'fa fa-calendar-check', 'app_reservation_new', ['id' => 1]);
-        yield MenuItem::linkToRoute('Paiements', 'fa fa-money-bill', 'app_paiement', ['id' => 1]);
+        yield MenuItem::linkToRoute('Réservations', 'fa fa-calendar-check', 'app_reservation_index');
+        yield MenuItem::linkToRoute('Paiements', 'fa fa-money-bill', 'app_paiement_index');
     }
 }

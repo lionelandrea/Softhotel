@@ -11,7 +11,7 @@
                 <th>Id</th>
                 <th>NomType</th>
                 <th>PrixParNuit</th>
-                <th>CapacitéMax</th>
+                <th>CapacitéMax</th> {# ici c'est OK (affichage) #}
                 <th>actions</th>
             </tr>
         </thead>
@@ -21,7 +21,7 @@
                 <td>{{ type_chambre.id }}</td>
                 <td>{{ type_chambre.nomType }}</td>
                 <td>{{ type_chambre.prixParNuit }}</td>
-                <td>{{ type_chambre.capacitéMax }}</td>
+                <td>{{ type_chambre.capaciteMax }}</td> {# CORRIGÉ #}
                 <td>
                     <a href="{{ path('app_type_chambre_show', {'id': type_chambre.id}) }}">show</a>
                     <a href="{{ path('app_type_chambre_edit', {'id': type_chambre.id}) }}">edit</a>

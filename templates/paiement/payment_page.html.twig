@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement - SoftHotel{% endblock %}
+
+{% block body %}
+<section class="section">
+    <h1 class="text-center">Paiement</h1>
+
+    {% if reservation is null %}
+        <div class="empty-state">
+            <h2>Aucune réservation en cours</h2>
+            <p>Vous devez d'abord effectuer une réservation avant d'accéder au paiement.</p>
+            <a href="{{ path('app_chambre_index') }}" class="btn mt-20">Réserver maintenant</a>
+        </div>
+    {% else %}
+        <div class="grid-2 mt-30">
+            <div class="card">
+                <h2>Résumé de la réservation</h2>
+                <p><strong>Chambre :</strong> Chambre {{ reservation.chambre.numeroChambre }}</p>
+                <p><strong>Date arrivée :</strong> {{ reservation.dateDebut|date('d/m/Y') }}</p>
+                <p><strong>Date départ :</strong> {{ reservation.dateFin|date('d/m/Y') }}</p>
+                <p><strong>Nombre de nuits :</strong> {{ nbJours }}</p>
+                <p><strong>Prix par nuit :</strong> {{ prixParNuit }} FCFA</p>
+                <p><strong>Total :</strong> {{ total }} FCFA</p>
+            </div>
+
+            <div class="card">
+                <h2>Informations de paiement</h2>
+
+                <div class="form-group">
+                    <label>Mode de paiement</label>
+                    <select>
+                        <option>Mobile Money</option>
+                        <option>Carte bancaire</option>
+                        <option>Virement</option>
+                        <option>Espèces</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Montant</label>
+                    <input type="number" value="{{ total }}">
+                </div>
+
+                <div class="form-group">
+                    <label>Date de paiement</label>
+                    <input type="date">
+                </div>
+
+                <a href="#" class="btn">Confirmer le paiement</a>
+            </div>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

@@ -54,6 +54,7 @@ class Client
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
+
         return $this;
     }
 
@@ -65,6 +66,7 @@ class Client
     public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
+
         return $this;
     }
 
@@ -76,6 +78,7 @@ class Client
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -87,6 +90,7 @@ class Client
     public function setTelephone(string $telephone): static
     {
         $this->telephone = $telephone;
+
         return $this;
     }
 
@@ -98,6 +102,7 @@ class Client
     public function setMotPasse(string $motPasse): static
     {
         $this->motPasse = $motPasse;
+
         return $this;
     }
 
@@ -132,6 +137,6 @@ class Client
 
     public function __toString(): string
     {
-        return ($this->nom ?? '') . ' ' . ($this->prenom ?? '');
+        return trim(($this->nom ?? '') . ' ' . ($this->prenom ?? '')) ?: 'Client';
     }
 }

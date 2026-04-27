@@ -22,7 +22,7 @@ class TypeChambre
     private ?int $prixParNuit = null;
 
     #[ORM\Column]
-    private ?int $capacitéMax = null;
+    private ?int $capaciteMax = null;
 
     /**
      * @var Collection<int, Chambre>
@@ -34,10 +34,10 @@ class TypeChambre
     {
         $this->chambres = new ArrayCollection();
     }
-    
+
     public function __toString(): string
     {
-    return $this->nomType ?? '';
+        return $this->nomType ?? '';
     }
 
     public function getId(): ?int
@@ -69,14 +69,14 @@ class TypeChambre
         return $this;
     }
 
-    public function getCapacitéMax(): ?int
+    public function getCapaciteMax(): ?int
     {
-        return $this->capacitéMax;
+        return $this->capaciteMax;
     }
 
-    public function setCapacitéMax(int $capacitéMax): static
+    public function setCapaciteMax(int $capaciteMax): static
     {
-        $this->capacitéMax = $capacitéMax;
+        $this->capaciteMax = $capaciteMax;
 
         return $this;
     }
@@ -102,7 +102,6 @@ class TypeChambre
     public function removeChambre(Chambre $chambre): static
     {
         if ($this->chambres->removeElement($chambre)) {
-            // set the owning side to null (unless already changed)
             if ($chambre->getTypeChambre() === $this) {
                 $chambre->setTypeChambre(null);
             }

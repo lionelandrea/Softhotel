@@ -37,6 +37,7 @@
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar">
         <div class="container">
@@ -44,8 +45,8 @@
             <div class="nav-links">
                 <a href="{{ path('app_home') }}">Accueil</a>
                 <a href="{{ path('app_chambre_index') }}">Réservation</a>
-                <a href="#">À propos</a>
-                <a href="#">Contact</a>
+                <a href="{{ path('app_about') }}">À propos</a>
+                <a href="{{ path('app_contact') }}">Contact</a>
                 <a href="{{ path('app_login') }}" class="btn btn-light">Login</a>
                 <a href="{{ path('app_register') }}" class="btn">Sign up</a>
             </div>
@@ -56,4 +57,48 @@
         {% block body %}{% endblock %}
     </div>
 </body>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+
+            <div class="footer-col">
+                <h3>SoftHotel</h3>
+                <p>
+                    Votre solution moderne de réservation d’hôtels.
+                    Confort, simplicité et efficacité au cœur de notre service.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                    <li><a href="{{ path('app_about') }}">À propos</a></li>
+                    <li><a href="{{ path('app_contact') }}">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>Email : contact@softhotel.com</p>
+                <p>Tél : +237 6 99 99 99 99</p>
+                <p>Douala, Cameroun</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Suivez-nous</h4>
+                <div class="socials">
+                    <a href="#">Facebook</a>
+                    <a href="#">WhatsApp</a>
+                    <a href="#">Instagram</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© {{ "now"|date("Y") }} SoftHotel. Tous droits réservés.</p>
+        </div>
+    </div>
+</footer>
 </html>

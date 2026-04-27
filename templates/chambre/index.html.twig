@@ -1,27 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Chambres - SoftHotel{% endblock %}
-
 {% block body %}
-    <section class="section">
-        <h1>Nos chambres</h1>
+<h1>Liste des chambres</h1>
 
-        <div class="grid-3 mt-30">
-            {% for chambre in chambres %}
-                <div class="card">
-                    <div class="img-placeholder">Image</div>
-                    <h3 class="mt-20">Chambre {{ chambre.numeroChambre }}</h3>
-                    <p>Type : {{ chambre.typeChambre ? chambre.typeChambre.nomType : 'Non défini' }}</p>
-                    <p>Prix : {{ chambre.typeChambre ? chambre.typeChambre.prixParNuit : 0 }} FCFA / nuit</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Image</th>
+            <th>Numéro</th>
+            <th>Type</th>
+            <th>Disponible</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
 
-                    <div class="actions mt-20">
-                        <a href="{{ path('app_chambre_show', {'id': chambre.id}) }}" class="btn btn-light">Détails</a>
-                        <a href="{{ path('app_reservation_new', {'id': chambre.id}) }}" class="btn">Réserver</a>
-                    </div>
-                </div>
-            {% else %}
-                <p>Aucune chambre disponible.</p>
-            {% endfor %}
-        </div>
-    </section>
+    <tbody>
+    {% for chambre in chambres %}
+        <tr>
+            <td>{{ chambre.id }}</td>
+
+            <td>
+                {% if chambre.image %}
+                    <img src="{{ asset('uploads/chambres/' ~ chambre.image) }}" width="100">
+                {% else %}
+                    Aucune image
+                {% endif %}
+            </td>
+
+            <td>{{ chambre.numeroChambre }}</td>
+            <td>{{ chambre.typeChambre.nomType }}</td>
+
+            <td>
+                {% if chambre.disponible %}
+                    <span style="color: green;">Oui</span>
+                {% else %}
+                    <span style="color: red;">Non</span>
+                {% endif %}
+            </td>
+
+            <td>
+                <a href="{{ path('app_chambre_show', {'id': chambre.id}) }}">Voir</a>
+                <a href="{{ path('app_chambre_edit', {'id': chambre.id}) }}">Modifier</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('app_chambre_new') }}">Ajouter une chambre</a>
+
 {% endblock %}

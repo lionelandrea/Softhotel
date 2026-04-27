@@ -1,46 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Paiement - SoftHotel{% endblock %}
+{% block title %}Liste des paiements{% endblock %}
 
 {% block body %}
-    <section class="section">
-        <h1 class="text-center">Paiement</h1>
+<section class="section">
+    <h1 class="text-center">Liste des paiements</h1>
 
-        <div class="grid-2 mt-30">
-            <div class="card">
-                <h2>Résumé de la réservation</h2>
-                <p><strong>Chambre :</strong> Chambre {{ reservation.chambre.numeroChambre }}</p>
-                <p><strong>Date arrivée :</strong> {{ reservation.dateDebut|date('d/m/Y') }}</p>
-                <p><strong>Date départ :</strong> {{ reservation.dateFin|date('d/m/Y') }}</p>
-                <p><strong>Nombre de nuits :</strong> {{ nbJours }}</p>
-                <p><strong>Prix par nuit :</strong> {{ prixParNuit }} FCFA</p>
-                <p><strong>Total :</strong> {{ total }} FCFA</p>
-            </div>
-
-            <div class="card">
-                <h2>Informations de paiement</h2>
-                <div class="form-group">
-                    <label>Mode de paiement</label>
-                    <select>
-                        <option>Mobile Money</option>
-                        <option>Carte bancaire</option>
-                        <option>Virement</option>
-                        <option>Espèces</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Montant</label>
-                    <input type="number" value="{{ total }}">
-                </div>
-
-                <div class="form-group">
-                    <label>Date de paiement</label>
-                    <input type="date">
-                </div>
-
-                <a href="#" class="btn">Confirmer le paiement</a>
-            </div>
+    {% if paiements is empty %}
+        <div class="empty-state">
+            <h2>Aucun paiement enregistré</h2>
+            <p>Il n'y a encore aucun paiement dans le système.</p>
         </div>
-    </section>
+    {% else %}
+        <table class="table mt-30">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Montant</th>
+                    <th>Date de paiement</th>
+                    <th>Réservation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for paiement in paiements %}
+                <tr>
+                    <td>{{ paiement.id }}</td>
+                    <td>{{ paiement.montant }}</td>
+                    <td>{{ paiement.datePaiement ? paiement.datePaiement|date('d/m/Y') : '' }}</td>
+                    <td>{{ paiement.reservation ? paiement.reservation.id : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_paiement_show', {'id': paiement.id}) }}">Voir</a>
+                        <a href="{{ path('app_paiement_edit', {'id': paiement.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</section>
 {% endblock %}

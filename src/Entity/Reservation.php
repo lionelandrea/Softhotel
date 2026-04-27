@@ -30,7 +30,7 @@ class Reservation
     private ?Client $client = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
-    private ?chambre $chambre = null;
+    private ?Chambre $chambre = null;
 
     public function getId(): ?int
     {
