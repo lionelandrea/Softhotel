@@ -42,6 +42,7 @@ final class ReservationController extends AbstractController
         $reservation->setChambre($chambre);
         $reservation->setDateReservation(new \DateTime());
         $reservation->setStatut('En attente');
+        $reservation->setMontantTotal(0);
 
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
@@ -52,9 +53,11 @@ final class ReservationController extends AbstractController
 
             if ($dateDebut >= $dateFin) {
                 $this->addFlash('danger', 'La date de fin doit être après la date de début.');
+
                 return $this->render('reservation/new.html.twig', [
                     'reservation' => $reservation,
                     'form' => $form,
+                    'chambre' => $chambre,
                 ]);
             }
 
@@ -62,20 +65,29 @@ final class ReservationController extends AbstractController
                 ->andWhere('r.chambre = :chambre')
                 ->andWhere('r.dateDebut < :dateFin')
                 ->andWhere('r.dateFin > :dateDebut')
+                ->andWhere('r.statut != :statutAnnule')
                 ->setParameter('chambre', $chambre)
                 ->setParameter('dateDebut', $dateDebut)
                 ->setParameter('dateFin', $dateFin)
+                ->setParameter('statutAnnule', 'Annulée')
                 ->getQuery()
                 ->getResult();
 
             if (count($reservationExistante) > 0) {
                 $this->addFlash('danger', 'Cette chambre est déjà réservée pour cette période.');
+
                 return $this->render('reservation/new.html.twig', [
                     'reservation' => $reservation,
                     'form' => $form,
+                    'chambre' => $chambre,
                 ]);
             }
 
+            $nombreNuits = $dateDebut->diff($dateFin)->days;
+            $prixParNuit = $chambre->getTypeChambre()->getPrixParNuit();
+            $montantTotal = $nombreNuits * $prixParNuit;
+
+            $reservation->setMontantTotal($montantTotal);
             $reservation->setStatut('Confirmée');
             $chambre->setDisponible(false);
 
@@ -90,6 +102,7 @@ final class ReservationController extends AbstractController
         return $this->render('reservation/new.html.twig', [
             'reservation' => $reservation,
             'form' => $form,
+            'chambre' => $chambre,
         ]);
     }
 
@@ -102,12 +115,60 @@ final class ReservationController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'app_reservation_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
-    {
+    public function edit(
+        Request $request,
+        Reservation $reservation,
+        EntityManagerInterface $entityManager,
+        ReservationRepository $reservationRepository
+    ): Response {
+        $ancienneDateDebut = clone $reservation->getDateDebut();
+        $ancienneDateFin = clone $reservation->getDateFin();
+
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $dateDebut = $reservation->getDateDebut();
+            $dateFin = $reservation->getDateFin();
+            $chambre = $reservation->getChambre();
+
+            if ($dateDebut >= $dateFin) {
+                $this->addFlash('danger', 'La date de fin doit être après la date de début.');
+
+                return $this->render('reservation/edit.html.twig', [
+                    'reservation' => $reservation,
+                    'form' => $form,
+                ]);
+            }
+
+            $reservationExistante = $reservationRepository->createQueryBuilder('r')
+                ->andWhere('r.chambre = :chambre')
+                ->andWhere('r.id != :reservationId')
+                ->andWhere('r.dateDebut < :dateFin')
+                ->andWhere('r.dateFin > :dateDebut')
+                ->andWhere('r.statut != :statutAnnule')
+                ->setParameter('chambre', $chambre)
+                ->setParameter('reservationId', $reservation->getId())
+                ->setParameter('dateDebut', $dateDebut)
+                ->setParameter('dateFin', $dateFin)
+                ->setParameter('statutAnnule', 'Annulée')
+                ->getQuery()
+                ->getResult();
+
+            if (count($reservationExistante) > 0) {
+                $this->addFlash('danger', 'Cette chambre est déjà réservée pour cette période.');
+
+                return $this->render('reservation/edit.html.twig', [
+                    'reservation' => $reservation,
+                    'form' => $form,
+                ]);
+            }
+
+            $nombreNuits = $dateDebut->diff($dateFin)->days;
+            $prixParNuit = $chambre->getTypeChambre()->getPrixParNuit();
+
+            $reservation->setMontantTotal($nombreNuits * $prixParNuit);
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
@@ -120,14 +181,36 @@ final class ReservationController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'app_reservation_delete', methods: ['POST'])]
-    public function delete(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
-    {
+    public function delete(
+        Request $request,
+        Reservation $reservation,
+        EntityManagerInterface $entityManager
+    ): Response {
         if ($this->isCsrfTokenValid('delete'.$reservation->getId(), $request->getPayload()->getString('_token'))) {
             $reservation->getChambre()?->setDisponible(true);
+
             $entityManager->remove($reservation);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/annuler/{id}', name: 'app_reservation_annuler', methods: ['POST'])]
+    public function annuler(
+        Request $request,
+        Reservation $reservation,
+        EntityManagerInterface $entityManager
+    ): Response {
+        if ($this->isCsrfTokenValid('annuler'.$reservation->getId(), $request->getPayload()->getString('_token'))) {
+            $reservation->setStatut('Annulée');
+            $reservation->getChambre()?->setDisponible(true);
+
+            $entityManager->flush();
+
+        $this->addFlash('success', 'Réservation annulée avec succès.');
+    }
+
+          return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
     }
 }

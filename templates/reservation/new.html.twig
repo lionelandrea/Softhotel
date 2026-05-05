@@ -6,7 +6,13 @@
 <section class="section">
     <h1 class="text-center">Réservation</h1>
 
-    {% if chambre is null %}
+    {% for message in app.flashes('danger') %}
+        <div style="background:#fdecea; color:#b00020; padding:12px; border-radius:8px; margin-bottom:20px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% if chambre is not defined or chambre is null %}
         <div class="empty-state">
             <h2>Aucune chambre sélectionnée</h2>
             <p>Veuillez choisir une chambre pour effectuer une réservation.</p>
@@ -19,7 +25,35 @@
         <div class="card">
             <h2>Chambre {{ chambre.numeroChambre }}</h2>
 
-            {# ici ton formulaire de réservation #}
+            {% if chambre.image %}
+                <img src="{{ asset('uploads/chambres/' ~ chambre.image) }}"
+                     alt="Chambre {{ chambre.numeroChambre }}"
+                     style="width:100%; max-height:260px; object-fit:cover; border-radius:12px; margin-bottom:20px;">
+            {% endif %}
+
+            <p>
+                Type :
+                <strong>{{ chambre.typeChambre ? chambre.typeChambre.nomType : 'Non défini' }}</strong>
+            </p>
+
+            {% if chambre.typeChambre %}
+                <p>
+                    Prix par nuit :
+                    <strong>
+                        {{ (chambre.typeChambre.prixParNuit / 655)|number_format(2, ',', ' ') }} €
+                    </strong>
+                </p>
+            {% endif %}
+
+            {{ form_start(form) }}
+                {{ form_row(form.dateDebut) }}
+                {{ form_row(form.dateFin) }}
+                {{ form_row(form.client) }}
+
+                <button type="submit" class="btn mt-20">
+                    Confirmer la réservation
+                </button>
+            {{ form_end(form) }}
         </div>
     {% endif %}
 </section>

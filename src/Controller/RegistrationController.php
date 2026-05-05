@@ -22,37 +22,38 @@ final class RegistrationController extends AbstractController
         EntityManagerInterface $entityManager,
         AdminRepository $adminRepository
     ): Response {
-        $admin = new Admin();
-        $form = $this->createForm(RegistrationFormType::class, $admin);
+        $user = new Admin();
+
+        $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $existingAdmin = $adminRepository->findOneBy([
-                'email' => $admin->getEmail()
+            $existingUser = $adminRepository->findOneBy([
+                'email' => $user->getEmail(),
             ]);
 
-            if ($existingAdmin) {
+            if ($existingUser) {
                 $form->get('email')->addError(new FormError('Cet email existe déjà.'));
             }
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-    $admin->setPassword(
-        $userPasswordHasher->hashPassword(
-            $admin,
-            $form->get('password')->getData()
-        )
-    );
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
 
-    $admin->setRoles(['ROLE_USER']);
+            $user->setRoles(['ROLE_USER']);
 
-    $entityManager->persist($admin);
-    $entityManager->flush();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-    $this->addFlash('success', 'Compte créé avec succès.');
+            $this->addFlash('success', 'Compte utilisateur créé avec succès.');
 
-    return $this->redirectToRoute('app_login');
-}
+            return $this->redirectToRoute('app_login');
+        }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,

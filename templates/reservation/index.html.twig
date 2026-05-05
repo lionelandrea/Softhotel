@@ -26,10 +26,32 @@
                 <td>{{ reservation.dateDebut|date('d/m/Y') }}</td>
                 <td>{{ reservation.dateFin|date('d/m/Y') }}</td>
                 <td>{{ reservation.dateReservation|date('d/m/Y') }}</td>
-                <td>{{ reservation.statut }}</td>
+                <td>
+                    {% if reservation.statut == 'Annulée' %}
+                        <span style="color:red;">Annulée</span>
+                    {% elseif reservation.statut == 'Payée' %}
+                        <span style="color:green;">Payée</span>
+                    {% else %}
+                        {{ reservation.statut }}
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">Voir</a>
                     <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">Modifier</a>
+
+                    {% if reservation.statut != 'Annulée' %}
+                        <form method="post"
+                              action="{{ path('app_reservation_annuler', {'id': reservation.id}) }}"
+                              style="display:inline;"
+                              onsubmit="return confirm('Confirmer l’annulation ?');">
+
+                            <input type="hidden" name="_token" value="{{ csrf_token('annuler' ~ reservation.id) }}">
+
+                            <button class="btn btn-light">
+                                Annuler
+                            </button>
+                        </form>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}

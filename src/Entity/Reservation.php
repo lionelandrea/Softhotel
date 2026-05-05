@@ -26,11 +26,21 @@ class Reservation
     #[ORM\Column(length: 50)]
     private ?string $statut = null;
 
+    #[ORM\Column]
+    private ?int $montantTotal = null;
+
     #[ORM\ManyToOne(inversedBy: 'reservations')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Client $client = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Chambre $chambre = null;
+
+    public function __toString(): string
+    {
+        return 'Réservation #' . ($this->id ?? '');
+    }
 
     public function getId(): ?int
     {
@@ -45,13 +55,7 @@ class Reservation
     public function setDateDebut(\DateTime $dateDebut): static
     {
         $this->dateDebut = $dateDebut;
-
         return $this;
-    }
-
-    public function __toString(): string
-   {
-    return 'Réservation #' . $this->id;
     }
 
     public function getDateFin(): ?\DateTime
@@ -62,7 +66,6 @@ class Reservation
     public function setDateFin(\DateTime $dateFin): static
     {
         $this->dateFin = $dateFin;
-
         return $this;
     }
 
@@ -74,7 +77,6 @@ class Reservation
     public function setDateReservation(\DateTime $dateReservation): static
     {
         $this->dateReservation = $dateReservation;
-
         return $this;
     }
 
@@ -86,7 +88,17 @@ class Reservation
     public function setStatut(string $statut): static
     {
         $this->statut = $statut;
+        return $this;
+    }
 
+    public function getMontantTotal(): ?int
+    {
+        return $this->montantTotal;
+    }
+
+    public function setMontantTotal(int $montantTotal): static
+    {
+        $this->montantTotal = $montantTotal;
         return $this;
     }
 
@@ -98,19 +110,17 @@ class Reservation
     public function setClient(?Client $client): static
     {
         $this->client = $client;
-
         return $this;
     }
 
-    public function getChambre(): ?chambre
+    public function getChambre(): ?Chambre
     {
         return $this->chambre;
     }
 
-    public function setChambre(?chambre $chambre): static
+    public function setChambre(?Chambre $chambre): static
     {
         $this->chambre = $chambre;
-
         return $this;
     }
 }

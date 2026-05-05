@@ -20,6 +20,9 @@ class Paiement
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $datePaiement = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $referencePaypal = null;
+
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Reservation $reservation = null;
 
@@ -36,7 +39,6 @@ class Paiement
     public function setMontant(int $montant): static
     {
         $this->montant = $montant;
-
         return $this;
     }
 
@@ -48,7 +50,17 @@ class Paiement
     public function setDatePaiement(\DateTime $datePaiement): static
     {
         $this->datePaiement = $datePaiement;
+        return $this;
+    }
 
+    public function getReferencePaypal(): ?string
+    {
+        return $this->referencePaypal;
+    }
+
+    public function setReferencePaypal(?string $referencePaypal): static
+    {
+        $this->referencePaypal = $referencePaypal;
         return $this;
     }
 
@@ -60,7 +72,6 @@ class Paiement
     public function setReservation(?Reservation $reservation): static
     {
         $this->reservation = $reservation;
-
         return $this;
     }
 }

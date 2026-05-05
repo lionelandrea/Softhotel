@@ -1,55 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Paiement - SoftHotel{% endblock %}
+{% block title %}Paiement{% endblock %}
 
 {% block body %}
 <section class="section">
-    <h1 class="text-center">Paiement</h1>
+    <h1 class="text-center">Paiement de la réservation</h1>
 
-    {% if reservation is null %}
-        <div class="empty-state">
-            <h2>Aucune réservation en cours</h2>
-            <p>Vous devez d'abord effectuer une réservation avant d'accéder au paiement.</p>
-            <a href="{{ path('app_chambre_index') }}" class="btn mt-20">Réserver maintenant</a>
+    <div class="card">
+        <h2>Résumé</h2>
+
+        <p>Réservation : #{{ reservation.id }}</p>
+        <p>Chambre : {{ reservation.chambre.numeroChambre }}</p>
+        <p>Client : {{ reservation.client.nom }} {{ reservation.client.prenom }}</p>
+        <p>Date d’arrivée : {{ reservation.dateDebut|date('d/m/Y') }}</p>
+        <p>Date de départ : {{ reservation.dateFin|date('d/m/Y') }}</p>
+
+        <p>
+            Montant à payer :
+            <strong>
+                {{ reservation.montantTotal|number_format(2, ',', ' ') }} €
+            </strong>
+        </p>
+
+        <div class="actions mt-20" style="display:flex; gap:12px; flex-wrap:wrap;">
+            <form method="post" action="{{ path('app_paypal_create', {'id': reservation.id}) }}">
+                <button type="submit" class="btn">
+                    Payer avec PayPal
+                </button>
+            </form>
+
+            <form method="post" action="{{ path('app_paiement_confirmer', {'id': reservation.id}) }}">
+                <button type="submit" class="btn btn-light">
+                    Confirmer le paiement manuel
+                </button>
+            </form>
         </div>
-    {% else %}
-        <div class="grid-2 mt-30">
-            <div class="card">
-                <h2>Résumé de la réservation</h2>
-                <p><strong>Chambre :</strong> Chambre {{ reservation.chambre.numeroChambre }}</p>
-                <p><strong>Date arrivée :</strong> {{ reservation.dateDebut|date('d/m/Y') }}</p>
-                <p><strong>Date départ :</strong> {{ reservation.dateFin|date('d/m/Y') }}</p>
-                <p><strong>Nombre de nuits :</strong> {{ nbJours }}</p>
-                <p><strong>Prix par nuit :</strong> {{ prixParNuit }} FCFA</p>
-                <p><strong>Total :</strong> {{ total }} FCFA</p>
-            </div>
-
-            <div class="card">
-                <h2>Informations de paiement</h2>
-
-                <div class="form-group">
-                    <label>Mode de paiement</label>
-                    <select>
-                        <option>Mobile Money</option>
-                        <option>Carte bancaire</option>
-                        <option>Virement</option>
-                        <option>Espèces</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Montant</label>
-                    <input type="number" value="{{ total }}">
-                </div>
-
-                <div class="form-group">
-                    <label>Date de paiement</label>
-                    <input type="date">
-                </div>
-
-                <a href="#" class="btn">Confirmer le paiement</a>
-            </div>
-        </div>
-    {% endif %}
+    </div>
 </section>
 {% endblock %}

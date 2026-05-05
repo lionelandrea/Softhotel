@@ -6,37 +6,50 @@
 <section class="section">
     <h1 class="text-center">Liste des paiements</h1>
 
-    {% if paiements is empty %}
-        <div class="empty-state">
-            <h2>Aucun paiement enregistré</h2>
-            <p>Il n'y a encore aucun paiement dans le système.</p>
-        </div>
-    {% else %}
-        <table class="table mt-30">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Montant</th>
-                    <th>Date de paiement</th>
-                    <th>Réservation</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for paiement in paiements %}
-                <tr>
-                    <td>{{ paiement.id }}</td>
-                    <td>{{ paiement.montant }}</td>
-                    <td>{{ paiement.datePaiement ? paiement.datePaiement|date('d/m/Y') : '' }}</td>
-                    <td>{{ paiement.reservation ? paiement.reservation.id : '' }}</td>
-                    <td>
-                        <a href="{{ path('app_paiement_show', {'id': paiement.id}) }}">Voir</a>
-                        <a href="{{ path('app_paiement_edit', {'id': paiement.id}) }}">Modifier</a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Montant</th>
+                <th>Date paiement</th>
+                <th>Réservation</th>
+                <th>Client</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for paiement in paiements %}
+            <tr>
+                <td>{{ paiement.id }}</td>
+                <td>{{ paiement.montant|number_format(2, ',', ' ') }} €</td>
+                <td>{{ paiement.datePaiement ? paiement.datePaiement|date('d/m/Y') : '' }}</td>
+                <td>
+                    {% if paiement.reservation %}
+                        <a href="{{ path('app_reservation_show', {'id': paiement.reservation.id}) }}">
+                            Réservation #{{ paiement.reservation.id }}
+                        </a>
+                    {% else %}
+                        Aucune réservation
+                    {% endif %}
+                </td>
+                <td>
+                    {% if paiement.reservation and paiement.reservation.client %}
+                        {{ paiement.reservation.client.nom }} {{ paiement.reservation.client.prenom }}
+                    {% else %}
+                        Non défini
+                    {% endif %}
+                </td>
+                <td>
+                    {{ paiement.reservation ? paiement.reservation.statut : 'Non défini' }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun paiement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </section>
 {% endblock %}

@@ -13,6 +13,10 @@ class DashboardController extends AbstractDashboardController
 {
     public function index(): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_logout');
+        }
+
         return $this->render('admin/dashboard.html.twig');
     }
 
