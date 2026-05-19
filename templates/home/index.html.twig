@@ -3,80 +3,107 @@
 {% block title %}Accueil - SoftHotel{% endblock %}
 
 {% block body %}
-    <section class="hero">
-        <h1>Bienvenue sur SoftHotel</h1>
-        <p>Réservez votre chambre en toute simplicité</p>
+<section class="bg-white rounded-2xl shadow-sm p-8 md:p-14 text-center">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">
+        Bienvenue sur SoftHotel
+    </h1>
 
-        <div class="form-row">
-            <input type="date" placeholder="Date d'arrivée">
-            <input type="date" placeholder="Date de départ">
-            <input type="number" min="1" placeholder="Nb. de personne">
-            <a href="{{ path('app_chambre_index') }}" class="btn">Rechercher</a>
-        </div>
-    </section>
+    <p class="text-gray-600 text-lg mb-8">
+        Réservez votre chambre en toute simplicité
+    </p>
 
-    <section class="section">
-    <h2 class="text-center">Chambres populaires</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <input type="date" class="border rounded-lg px-4 py-3">
+        <input type="date" class="border rounded-lg px-4 py-3">
+        <input type="number" min="1" placeholder="Nb. de personnes" class="border rounded-lg px-4 py-3">
 
-    <div class="grid-3 mt-30">
+        <a href="{{ path('app_chambre_index') }}"
+           class="bg-gray-900 text-white rounded-lg px-4 py-3 font-semibold hover:bg-gray-700">
+            Rechercher
+        </a>
+    </div>
+</section>
+
+<section class="mt-10">
+    <h2 class="text-3xl font-bold text-center mb-8">
+        Chambres populaires
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {% for chambre in chambres %}
-            <div class="card text-center">
-
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition">
                 {% if chambre.image %}
                     <img src="{{ asset('uploads/chambres/' ~ chambre.image) }}"
                          alt="Chambre {{ chambre.numeroChambre }}"
-                         style="width:100%; height:220px; object-fit:cover; border-radius:12px;">
+                         class="w-full h-56 object-cover">
                 {% else %}
-                    <div class="img-placeholder">Aucune image</div>
+                    <div class="w-full h-56 bg-gray-200 flex items-center justify-center font-semibold">
+                        Aucune image
+                    </div>
                 {% endif %}
 
-                <h3 class="mt-20">Chambre {{ chambre.numeroChambre }}</h3>
+                <div class="p-5">
+                    <h3 class="text-xl font-bold mb-2">
+                        Chambre {{ chambre.numeroChambre }}
+                    </h3>
 
-                <p>
-                    {{ chambre.typeChambre ? chambre.typeChambre.nomType : 'Type non défini' }}
-                </p>
-
-                {% if chambre.typeChambre %}
-                    <p>
-                        <strong>{{ chambre.typeChambre.prixParNuit }} EURO</strong> / nuit
+                    <p class="text-gray-600">
+                        {{ chambre.typeChambre ? chambre.typeChambre.nomType : 'Type non défini' }}
                     </p>
-                {% endif %}
 
-                <div class="actions mt-20" style="justify-content:center;">
-                    <a href="{{ path('app_chambre_show', {'id': chambre.id}) }}" class="btn btn-light">
-                        Détails
-                    </a>
-
-                    {% if chambre.disponible %}
-                        <a href="{{ path('app_reservation_new', {'id': chambre.id}) }}" class="btn">
-                            Réserver
-                        </a>
-                    {% else %}
-                        <span style="color:red;">Indisponible</span>
+                    {% if chambre.typeChambre %}
+                        <p class="mt-3 text-lg font-bold">
+                            {{ chambre.typeChambre.prixParNuit|number_format(2, ',', ' ') }} € / nuit
+                        </p>
                     {% endif %}
+
+                    <div class="flex gap-3 mt-5">
+                        <a href="{{ path('app_chambre_show', {'id': chambre.id}) }}"
+                           class="flex-1 text-center bg-black text-white py-3 rounded-full font-bold shadow-lg hover:bg-gray-900 transition duration-300">
+                            Détails
+                        </a>
+
+                        {% if chambre.disponible %}
+                            <a href="{{ path('app_reservation_new', {'id': chambre.id}) }}"
+                               class="flex-1 text-center bg-[#5B1025] text-[#D4A017] py-3 rounded-full font-bold shadow-lg hover:bg-[#2D0713] transition duration-300">
+                                Réserver
+                            </a>
+                        {% else %}
+                           <span class="flex-1 text-center bg-red-600 text-white py-3 rounded-full font-bold shadow-lg hover:bg-red-700 transition duration-300">
+                               Indisponible
+                           </span>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         {% else %}
-            <p>Aucune chambre trouvée.</p>
+            <p class="text-center text-gray-500 col-span-3">
+                Aucune chambre trouvée.
+            </p>
         {% endfor %}
     </div>
 </section>
 
-    <section class="section">
-        <h2 class="text-center">Avis Clients</h2>
-        <div class="grid-3 mt-30">
-            <div class="card">
-                <h3>Client 1</h3>
-                <p>Excellent service et chambre très propre.</p>
-            </div>
-            <div class="card">
-                <h3>Client 2</h3>
-                <p>Réservation simple et accueil chaleureux.</p>
-            </div>
-            <div class="card">
-                <h3>Client 3</h3>
-                <p>Très bon rapport qualité-prix.</p>
-            </div>
+<section class="mt-12">
+    <h2 class="text-3xl font-bold text-center mb-8">
+        Avis clients
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl shadow-sm p-6">
+            <h3 class="font-bold text-lg mb-2">Client 1</h3>
+            <p class="text-gray-600">Excellent service et chambre très propre.</p>
         </div>
-    </section>
+
+        <div class="bg-white rounded-2xl shadow-sm p-6">
+            <h3 class="font-bold text-lg mb-2">Client 2</h3>
+            <p class="text-gray-600">Réservation simple et accueil chaleureux.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm p-6">
+            <h3 class="font-bold text-lg mb-2">Client 3</h3>
+            <p class="text-gray-600">Très bon rapport qualité-prix.</p>
+        </div>
+    </div>
+</section>
 {% endblock %}

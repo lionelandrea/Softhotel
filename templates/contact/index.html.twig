@@ -3,46 +3,137 @@
 {% block title %}Contact - SoftHotel{% endblock %}
 
 {% block body %}
-<section class="section">
-    <h1 class="text-center">Contactez-nous</h1>
 
-    <div class="grid-2 mt-30">
-        <div class="card">
-            <h2>Nos coordonnées</h2>
-            <p><strong>Email :</strong> contact@softhotel.com</p>
-            <p class="mt-20"><strong>Téléphone :</strong> +237 6 99 99 99 99</p>
-            <p class="mt-20"><strong>Adresse :</strong> Douala, Cameroun</p>
-        </div>
+<section class="contact-hero">
+    <div class="contact-hero-overlay">
 
-        <div class="card">
-            <h2>Formulaire de contact</h2>
+        <h1>
+            Contactez-<span>nous</span>
+        </h1>
 
-            <form>
-                <div class="form-group">
-                    <label>Nom complet</label>
-                    <input type="text" placeholder="Votre nom">
-                </div>
+        <div class="gold-divider"></div>
 
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" placeholder="Votre email">
-                </div>
+        <p>
+            Une question ? Une demande particulière ?
+            Notre équipe est à votre disposition pour vous accompagner
+            dans tous vos projets de réservation et de séjour.
+        </p>
 
-                <div class="form-group">
-                    <label>Sujet</label>
-                    <input type="text" placeholder="Sujet du message">
-                </div>
-
-                <div class="form-group">
-                    <label>Message</label>
-                    <textarea rows="5" style="width:100%; padding:10px; border:1px solid #bbb; border-radius:6px;" placeholder="Votre message"></textarea>
-                </div>
-
-                <div class="mt-20">
-                    <button type="submit" class="btn">Envoyer</button>
-                </div>
-            </form>
-        </div>
     </div>
 </section>
+
+<section class="contact-wrapper">
+
+    <div class="contact-grid">
+
+        <!-- INFORMATIONS -->
+        <div class="contact-info">
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    ✉
+                </div>
+
+                <div>
+                    <h3>Email</h3>
+                    <p>contact@softhotel.com</p>
+                </div>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    ☎
+                </div>
+
+                <div>
+                    <h3>Téléphone</h3>
+                    <p>+237 6 99 99 99 99</p>
+                </div>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    ⌖
+                </div>
+
+                <div>
+                    <h3>Adresse</h3>
+                    <p>Douala, Cameroun</p>
+                </div>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    ◷
+                </div>
+
+                <div>
+                    <h3>Horaires</h3>
+                    <p>
+                        Lundi - Dimanche <br>
+                        07h00 - 22h00
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FORMULAIRE -->
+        <div class="contact-form-card">
+
+            <h2>Envoyez-nous un message</h2>
+
+            <form>
+
+                <div class="form-two">
+
+                    <div>
+                        <label>Nom complet *</label>
+
+                        <input
+                            type="text"
+                            placeholder="Votre nom complet"
+                        >
+                    </div>
+
+                    <div>
+                        <label>Email *</label>
+
+                        <input
+                            type="email"
+                            placeholder="Votre adresse email"
+                        >
+                    </div>
+
+                </div>
+
+                <label>Sujet *</label>
+
+                <input
+                    type="text"
+                    placeholder="Sujet du message"
+                >
+
+                <label>Message *</label>
+
+                <textarea
+                    rows="6"
+                    placeholder="Écrivez votre message ici..."
+                ></textarea>
+
+                <button
+                    type="submit"
+                    class="contact-submit"
+                >
+                    ✈ Envoyer le message
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
 {% endblock %}

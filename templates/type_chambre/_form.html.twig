@@ -1,4 +1,37 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'form-box'}}) }}
+
+    <h1 class="section-title">
+        Type de chambre
+    </h1>
+
+    <div class="form-grid">
+        <div>
+            {{ form_label(form.nomType, 'Nom du type') }}
+            {{ form_widget(form.nomType) }}
+            {{ form_errors(form.nomType) }}
+        </div>
+
+        <div>
+            {{ form_label(form.prixParNuit, 'Prix par nuit') }}
+            {{ form_widget(form.prixParNuit) }}
+            {{ form_errors(form.prixParNuit) }}
+        </div>
+
+        <div>
+            {{ form_label(form.capaciteMax, 'Capacité maximale') }}
+            {{ form_widget(form.capaciteMax) }}
+            {{ form_errors(form.capaciteMax) }}
+        </div>
+    </div>
+
+    <div class="mt-8 flex gap-4">
+        <button class="btn btn-gold">
+            Enregistrer
+        </button>
+
+        <a href="{{ path('app_type_chambre_index') }}" class="btn btn-secondary">
+            Retour à la liste
+        </a>
+    </div>
+
 {{ form_end(form) }}

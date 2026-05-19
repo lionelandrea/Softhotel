@@ -1,49 +1,70 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestion des clients{% endblock %}
+{% block title %}Clients{% endblock %}
 
 {% block body %}
 <section class="section">
-    <h1 class="text-center">Gestion des clients</h1>
+
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-10">
+        <div>
+            <h1 class="text-5xl font-black text-bordeaux">
+                Gestion des clients
+            </h1>
+
+            <p class="text-bordeaux/70 mt-3 text-lg">
+                Consultez et gérez les informations des clients.
+            </p>
+        </div>
+
+        <a href="{{ path('app_client_new') }}" class="btn btn-gold">
+            Ajouter un client
+        </a>
+    </div>
 
     {% if clients is empty %}
         <div class="empty-state">
-            <h2>Aucun client enregistré</h2>
-            <p>Commence par ajouter un nouveau client.</p>
-            <a href="{{ path('admin_client_new') }}" class="btn mt-20">Ajouter un client</a>
+            <h2>Aucun client trouvé</h2>
+            <p>Aucun client n’est encore enregistré.</p>
         </div>
     {% else %}
-        <div class="mb-20">
-            <a href="{{ path('admin_client_new') }}" class="btn">Ajouter un client</a>
-        </div>
+        <div class="overflow-x-auto rounded-[2rem] shadow-2xl">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Email</th>
+                        <th>Téléphone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
-        <table class="table mt-30">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Email</th>
-                    <th>Téléphone</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for client in clients %}
-                <tr>
-                    <td>{{ client.id }}</td>
-                    <td>{{ client.nom }}</td>
-                    <td>{{ client.prenom }}</td>
-                    <td>{{ client.email }}</td>
-                    <td>{{ client.telephone }}</td>
-                    <td>
-                        <a href="{{ path('admin_client_show', {'id': client.id}) }}">Voir</a>
-                        <a href="{{ path('admin_client_edit', {'id': client.id}) }}">Modifier</a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                <tbody>
+                {% for client in clients %}
+                    <tr>
+                        <td class="font-bold">{{ client.id }}</td>
+                        <td class="font-bold text-bordeaux">{{ client.nom }}</td>
+                        <td>{{ client.prenom }}</td>
+                        <td>{{ client.email }}</td>
+                        <td>{{ client.telephone }}</td>
+                        <td>
+                            <div class="flex flex-wrap gap-3">
+                                <a href="{{ path('app_client_show', {'id': client.id}) }}" class="btn btn-secondary">
+                                    Voir
+                                </a>
+
+                                <a href="{{ path('app_client_edit', {'id': client.id}) }}" class="btn btn-primary">
+                                    Modifier
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endif %}
+
 </section>
 {% endblock %}

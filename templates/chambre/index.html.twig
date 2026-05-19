@@ -1,58 +1,136 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Liste des chambres{% endblock %}
+
 {% block body %}
-<h1>Liste des chambres</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Image</th>
-            <th>Numéro</th>
-            <th>Type</th>
-            <th>Disponible</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+<section class="section">
 
-    <tbody>
-    {% for chambre in chambres %}
-        <tr>
-            <td>{{ chambre.id }}</td>
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-10">
 
-            <td>
-                {% if chambre.image %}
-                    <img src="{{ asset('uploads/chambres/' ~ chambre.image) }}" width="100">
-                {% else %}
-                    Aucune image
-                {% endif %}
-            </td>
+        <div>
+            <h1 class="text-5xl font-black text-bordeaux">
+                Gestion des chambres
+            </h1>
 
-            <td>{{ chambre.numeroChambre }}</td>
-            <td>{{ chambre.typeChambre ? chambre.typeChambre.nomType : 'Non défini' }}</td>
+            <p class="text-bordeaux/70 mt-3 text-lg">
+                Consultez et gérez les chambres disponibles.
+            </p>
+        </div>
 
-            <td>
-                {% if chambre.disponible %}
-                    <span style="color: green;">Oui</span>
-                {% else %}
-                    <span style="color: red;">Non</span>
-                {% endif %}
-            </td>
+        <a href="{{ path('app_chambre_new') }}"
+           class="btn btn-gold">
+            Ajouter une chambre
+        </a>
 
-            <td>
-                <a href="{{ path('app_chambre_show', {'id': chambre.id}) }}">Voir</a>
+    </div>
 
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('app_chambre_edit', {'id': chambre.id}) }}">Modifier</a>
-                {% endif %}
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+    {% if chambres is empty %}
 
-{% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('app_chambre_new') }}">Ajouter une chambre</a>
-{% endif %}
+        <div class="empty-state">
+
+            <h2>Aucune chambre trouvée</h2>
+
+            <p>
+                Aucune chambre n’est encore enregistrée.
+            </p>
+
+            <a href="{{ path('app_chambre_new') }}"
+               class="btn btn-primary mt-6">
+                Ajouter maintenant
+            </a>
+
+        </div>
+
+    {% else %}
+
+        <div class="overflow-x-auto rounded-[2rem] shadow-2xl">
+
+            <table class="table">
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Numéro</th>
+                        <th>Type</th>
+                        <th>Disponibilité</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for chambre in chambres %}
+
+                    <tr>
+
+                        <td class="font-bold">
+                            {{ chambre.id }}
+                        </td>
+
+                        <td>
+                            {% if chambre.image %}
+                                <img
+                                    src="{{ asset('uploads/chambres/' ~ chambre.image) }}"
+                                    alt="Chambre {{ chambre.numeroChambre }}"
+                                    class="w-14 h-10 object-cover rounded-lg shadow"
+                                >
+                            {% else %}
+                                <div class="w-14 h-10 rounded-lg bg-bordeaux text-gold flex items-center justify-center text-[9px] font-bold">
+                                    Aucune
+                                </div>
+                            {% endif %}
+                        </td>
+
+                        <td class="font-bold text-bordeaux">
+                            {{ chambre.numeroChambre }}
+                        </td>
+
+                        <td>
+                            {{ chambre.typeChambre ? chambre.typeChambre.nomType : 'Non défini' }}
+                        </td>
+
+                        <td>
+                            {% if chambre.disponible %}
+                                <span class="px-4 py-2 rounded-full bg-green-600 text-white font-bold text-sm">
+                                    Disponible
+                                </span>
+                            {% else %}
+                                <span class="px-4 py-2 rounded-full bg-red-600 text-white font-bold text-sm">
+                                    Indisponible
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <div class="flex flex-wrap gap-3">
+
+                                <a href="{{ path('app_chambre_show', {'id': chambre.id}) }}"
+                                   class="btn btn-secondary">
+                                    Voir
+                                </a>
+
+                                <a href="{{ path('app_chambre_edit', {'id': chambre.id}) }}"
+                                   class="btn btn-primary">
+                                    Modifier
+                                </a>
+
+                            </div>
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    {% endif %}
+
+</section>
 
 {% endblock %}

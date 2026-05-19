@@ -1,55 +1,111 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des paiements{% endblock %}
+{% block title %}Paiements{% endblock %}
 
 {% block body %}
+
 <section class="section">
-    <h1 class="text-center">Liste des paiements</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Montant</th>
-                <th>Date paiement</th>
-                <th>Réservation</th>
-                <th>Client</th>
-                <th>Statut</th>
-            </tr>
-        </thead>
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-10">
+        <div>
+            <h1 class="text-5xl font-black text-bordeaux">
+                Gestion des paiements
+            </h1>
 
-        <tbody>
-        {% for paiement in paiements %}
-            <tr>
-                <td>{{ paiement.id }}</td>
-                <td>{{ paiement.montant|number_format(2, ',', ' ') }} €</td>
-                <td>{{ paiement.datePaiement ? paiement.datePaiement|date('d/m/Y') : '' }}</td>
-                <td>
-                    {% if paiement.reservation %}
-                        <a href="{{ path('app_reservation_show', {'id': paiement.reservation.id}) }}">
-                            Réservation #{{ paiement.reservation.id }}
-                        </a>
-                    {% else %}
-                        Aucune réservation
-                    {% endif %}
-                </td>
-                <td>
-                    {% if paiement.reservation and paiement.reservation.client %}
-                        {{ paiement.reservation.client.nom }} {{ paiement.reservation.client.prenom }}
-                    {% else %}
-                        Non défini
-                    {% endif %}
-                </td>
-                <td>
-                    {{ paiement.reservation ? paiement.reservation.statut : 'Non défini' }}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">Aucun paiement trouvé</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <p class="text-bordeaux/70 mt-3 text-lg">
+                Consultez et gérez les paiements des réservations.
+            </p>
+        </div>
+    </div>
+
+    {% if paiements is empty %}
+
+        <div class="empty-state">
+            <h2>Aucun paiement trouvé</h2>
+
+            <p>
+                Aucun paiement n’est encore enregistré.
+            </p>
+        </div>
+
+    {% else %}
+
+        <div class="overflow-x-auto rounded-[2rem] shadow-2xl">
+
+            <table class="table">
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Montant</th>
+                        <th>Date</th>
+                        <th>Réservation</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for paiement in paiements %}
+
+                    <tr>
+
+                        <td class="font-bold">
+                            {{ paiement.id }}
+                        </td>
+
+                        <td class="font-black text-gold">
+                            {{ paiement.montant|number_format(0, ',', ' ') }} €
+                        </td>
+
+                        <td>
+                            {{ paiement.datePaiement ? paiement.datePaiement|date('d/m/Y') : '' }}
+                        </td>
+
+                        <td>
+                            {% if paiement.reservation %}
+                                #{{ paiement.reservation.id }}
+                            {% else %}
+                                Non définie
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if paiement.reservation and paiement.reservation.statut == 'Payée' %}
+                                <span class="px-4 py-2 rounded-full bg-green-600 text-white font-bold text-sm">
+                                    Payé
+                                </span>
+                            {% else %}
+                                <span class="px-4 py-2 rounded-full bg-gold text-bordeaux font-bold text-sm">
+                                    En attente
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <div class="flex flex-wrap gap-3">
+
+                                <a href="{{ path('app_reservation_show', {'id': paiement.reservation.id}) }}"
+                                   class="btn btn-primary">
+                                    Réservation
+                                </a>
+
+                            </div>
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    {% endif %}
+
 </section>
+
 {% endblock %}

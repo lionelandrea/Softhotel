@@ -1,3 +1,419 @@
+@import "tailwindcss";
+
+@theme {
+    --color-bordeaux: #5B1025;
+    --color-bordeaux-dark: #2D0713;
+    --color-bordeaux-light: #7B1E3A;
+    --color-gold: #D4A017;
+    --color-gold-light: #F7E7B4;
+    --color-cream: #F8F6F3;
+}
+
+/* GLOBAL */
 body {
-    background-color: skyblue;
+    @apply bg-bordeaux text-white;
+    font-family: Inter, Arial, sans-serif;
+}
+
+a {
+    @apply no-underline transition duration-300;
+}
+
+/* LAYOUT */
+.page-container {
+    @apply max-w-7xl mx-auto px-6 py-8;
+}
+
+.section {
+    @apply bg-cream text-bordeaux rounded-[3rem] shadow-2xl border border-gold/20 p-8 md:p-14 mt-16;
+}
+
+.section-title {
+    @apply text-4xl md:text-5xl font-black text-bordeaux text-center mb-12;
+}
+
+/* NAVBAR */
+.navbar {
+    @apply fixed top-0 left-0 w-full z-50 bg-bordeaux-dark/95 backdrop-blur-xl border-b border-gold/30 shadow-2xl;
+}
+
+.nav-container {
+    @apply max-w-7xl mx-auto px-6 py-5 flex flex-wrap justify-between items-center gap-4;
+}
+
+.logo {
+    @apply text-3xl md:text-4xl font-black tracking-wide text-gold;
+}
+
+.nav-links {
+    @apply flex flex-wrap items-center gap-5;
+}
+
+.nav-link {
+    @apply text-white font-semibold hover:text-gold relative;
+}
+
+.nav-link::after {
+    content: "";
+    @apply absolute left-0 -bottom-1 h-[2px] w-0 bg-gold transition-all duration-300;
+}
+
+.nav-link:hover::after {
+    @apply w-full;
+}
+
+/* BUTTONS */
+.btn {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full font-bold transition duration-300 text-center;
+}
+
+.btn-primary {
+    @apply bg-gold text-bordeaux shadow-xl;
+}
+
+.btn-primary:hover {
+    @apply scale-105 shadow-2xl;
+}
+
+.btn-secondary {
+    @apply bg-black border border-black text-white shadow-lg;
+}
+
+.btn-secondary:hover {
+    @apply bg-gray-900 scale-105;
+}
+
+.btn-gold {
+    @apply bg-gold text-bordeaux font-black shadow-xl;
+}
+
+.btn-danger {
+    @apply bg-red-600 text-white shadow-lg;
+}
+
+.btn-danger:hover {
+    @apply bg-red-700 scale-105;
+}
+
+/* FORMS */
+.form-box {
+    @apply bg-white text-bordeaux rounded-[2rem] shadow-2xl border border-gold/20 p-8 md:p-12 max-w-2xl mx-auto;
+}
+
+.form-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-5;
+}
+
+.input,
+input,
+select,
+textarea {
+    @apply w-full bg-white text-bordeaux border border-gold/30 rounded-2xl px-4 py-4 outline-none transition duration-300;
+}
+
+.input:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    @apply border-gold ring-4 ring-gold/20;
+}
+
+label {
+    @apply font-bold text-bordeaux mb-2 block;
+}
+
+/* HERO */
+.hero {
+    @apply relative overflow-hidden min-h-[80vh] flex items-center justify-center text-center px-6 pt-32 pb-20 rounded-b-[4rem];
+    background:
+        linear-gradient(rgba(45,7,19,.82), rgba(45,7,19,.92)),
+        radial-gradient(circle at top left, rgba(212,160,23,.28), transparent 35%),
+        linear-gradient(135deg, #5B1025, #2D0713);
+}
+
+.hero-content {
+    @apply relative z-10 max-w-5xl;
+}
+
+.hero-title {
+    @apply text-5xl md:text-8xl font-black leading-tight text-white mb-6;
+}
+
+.hero-title span {
+    @apply text-gold;
+}
+
+.hero-text {
+    @apply text-white/80 text-lg md:text-2xl mb-10 leading-relaxed;
+}
+
+/* SEARCH */
+.search-box {
+    @apply bg-white/95 text-bordeaux rounded-[2rem] shadow-2xl border border-gold/30 p-5 md:p-7 max-w-6xl mx-auto relative -mt-20 z-20;
+}
+
+/* CARDS */
+.card {
+    @apply bg-white text-bordeaux rounded-[2.5rem] shadow-2xl border border-gold/20 p-7 transition duration-500;
+}
+
+.card:hover {
+    @apply -translate-y-2 border-gold;
+}
+
+.room-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10;
+}
+
+.room-card {
+    @apply bg-white text-bordeaux rounded-[2.5rem] overflow-hidden shadow-2xl border border-gold/20 transition duration-500;
+}
+
+.room-card:hover {
+    @apply -translate-y-3 border-gold;
+}
+
+.room-image {
+    @apply w-full h-80 object-cover;
+}
+
+.room-placeholder {
+    @apply w-full h-80 bg-bordeaux text-gold flex items-center justify-center font-black;
+}
+
+.room-content {
+    @apply p-8;
+}
+
+.room-title {
+    @apply text-3xl font-black text-bordeaux mb-2;
+}
+
+.room-type {
+    @apply text-bordeaux/70 font-semibold;
+}
+
+.room-price {
+    @apply text-gold text-3xl font-black mt-4;
+}
+
+.room-actions {
+    @apply flex flex-wrap gap-4 mt-8;
+}
+
+/* TABLES */
+.table {
+    @apply w-full bg-white text-bordeaux rounded-[2rem] overflow-hidden shadow-2xl border border-gold/20;
+}
+
+.table th {
+    @apply bg-bordeaux-dark text-gold px-5 py-5 text-left font-black;
+}
+
+.table td {
+    @apply px-5 py-4 border-t border-gold/20;
+}
+
+.table tr:hover {
+    @apply bg-gold-light;
+}
+
+/* STATUS */
+.status-success {
+    @apply text-green-600 font-black;
+}
+
+.status-danger {
+    @apply text-red-600 font-black;
+}
+
+.status-warning {
+    @apply text-gold font-black;
+}
+
+/* EMPTY STATE */
+.empty-state {
+    @apply bg-white text-bordeaux rounded-[2.5rem] shadow-2xl border border-gold/30 p-12 text-center;
+}
+
+.empty-state h2 {
+    @apply text-3xl font-black mb-4;
+}
+
+.empty-state p {
+    @apply text-bordeaux/70 text-lg mb-8;
+}
+
+/* PAYMENT */
+.payment-card {
+    @apply bg-white text-bordeaux rounded-[2.5rem] shadow-2xl border border-gold/30 p-8 md:p-12 max-w-2xl mx-auto;
+}
+
+.payment-amount {
+    @apply text-5xl font-black text-gold;
+}
+
+/* TESTIMONIALS */
+.testimonial-card {
+    @apply bg-white text-bordeaux rounded-[2rem] shadow-2xl border border-gold/20 p-8 transition duration-500;
+}
+
+.testimonial-card:hover {
+    @apply -translate-y-2 border-gold;
+}
+
+.testimonial-card h3 {
+    @apply text-2xl font-black mb-3;
+}
+
+.testimonial-card p {
+    @apply text-bordeaux/70 leading-relaxed;
+}
+
+/* CONTACT */
+.contact-hero {
+    @apply relative min-h-[360px] flex items-center justify-center text-center overflow-hidden;
+    margin: -2rem -1.5rem 0;
+    background:
+        linear-gradient(rgba(45,7,19,.82), rgba(45,7,19,.92)),
+        radial-gradient(circle at top left, rgba(212,160,23,.28), transparent 35%),
+        linear-gradient(135deg, #5B1025, #2D0713);
+    border-bottom: 3px solid #D4A017;
+}
+
+.contact-hero-overlay {
+    @apply text-white max-w-4xl px-5;
+}
+
+.contact-hero h1 {
+    @apply text-5xl md:text-7xl font-black mb-5;
+    font-family: Georgia, serif;
+}
+
+.gold-divider {
+    @apply w-44 h-[2px] bg-gold mx-auto mb-7 relative;
+}
+
+.gold-divider::after {
+    content: "";
+    @apply w-3 h-3 bg-gold absolute left-1/2 -top-[5px];
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.contact-hero p {
+    @apply text-white/90 text-lg md:text-xl leading-relaxed;
+}
+
+.contact-wrapper {
+    @apply bg-white text-bordeaux max-w-7xl mx-auto relative z-20 p-6 md:p-8 rounded-[2rem] shadow-2xl;
+    margin-top: -55px;
+}
+
+.contact-grid {
+    @apply grid grid-cols-1 lg:grid-cols-[0.9fr_1.7fr] gap-8;
+}
+
+.contact-info {
+    @apply grid gap-6;
+}
+
+.contact-card {
+    @apply flex items-center gap-5 bg-white p-6 rounded-2xl shadow-xl border border-gold/20;
+}
+
+.contact-icon {
+    @apply w-16 h-16 rounded-2xl bg-gold-light text-gold flex items-center justify-center text-3xl font-black;
+}
+
+.contact-card h3 {
+    @apply text-xl font-black text-bordeaux mb-1;
+}
+
+.contact-card p {
+    @apply text-bordeaux/70 leading-relaxed;
+}
+
+.contact-form-card {
+    @apply bg-white p-7 rounded-2xl shadow-xl border border-gold/20;
+}
+
+.contact-form-card h2 {
+    @apply text-2xl font-black text-bordeaux mb-6;
+    font-family: Georgia, serif;
+}
+
+.form-two {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+}
+
+.contact-submit {
+    @apply mt-5 bg-bordeaux text-white px-7 py-4 rounded-xl font-black transition duration-300;
+}
+
+.contact-submit:hover {
+    @apply scale-105 shadow-2xl;
+    background-color: #2D0713;
+}
+
+/* FOOTER */
+.footer {
+    @apply bg-bordeaux-dark text-white mt-24 py-16 border-t border-gold/30;
+}
+
+.footer-grid {
+    @apply max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 px-6;
+}
+
+.footer-title {
+    @apply text-gold text-2xl font-black mb-4;
+}
+
+.footer-link {
+    @apply text-white/70 hover:text-gold transition;
+}
+
+.footer-bottom {
+    @apply border-t border-gold/20 mt-12 pt-6 text-center text-sm text-white/70;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .hero-title {
+        @apply text-4xl;
+    }
+
+    .section-title {
+        @apply text-3xl;
+    }
+
+    .room-actions {
+        @apply flex-col;
+    }
+
+    .btn {
+        @apply w-full;
+    }
+}
+.btn {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full font-bold transition duration-300 cursor-pointer;
+}
+
+.btn-gold {
+    @apply bg-gold text-bordeaux font-black shadow-xl;
+}
+
+.btn-gold:hover {
+    @apply scale-105 shadow-2xl;
+}
+
+.btn-gold:active {
+    @apply scale-95;
+}
+
+.btn-unavailable {
+    @apply bg-red-600 text-white font-black rounded-full py-3 px-6 text-center shadow-lg;
+}
+
+.btn-unavailable:hover {
+    @apply bg-red-700;
 }

@@ -4,40 +4,113 @@
 
 {% block body %}
 <section class="section">
-    <h1 class="text-center">À propos de SoftHotel</h1>
+    <h1 class="section-title">À propos de SoftHotel</h1>
 
-    <div class="mt-30">
-        <p>
-            SoftHotel est une plateforme moderne de réservation hôtelière conçue pour offrir
-            une expérience simple, rapide et agréable à ses utilisateurs.
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+
+    <div>
+
+        <h2 class="text-5xl font-black text-bordeaux mb-8">
+            Notre histoire
+        </h2>
+
+        <p class="text-lg leading-relaxed text-bordeaux/80">
+            Fondée en 2018, SoftHotel est née d'une passion pour le voyage et d'une volonté de
+            simplifier la recherche d'hébergement de qualité. Notre mission : connecter les
+            voyageurs avec les meilleurs hôtels au meilleur prix.
         </p>
 
-        <p class="mt-20">
-            Notre objectif est de permettre aux clients de consulter les chambres disponibles,
-            effectuer leurs réservations en ligne et procéder au paiement en toute sécurité.
+        <p class="mt-6 text-lg leading-relaxed text-bordeaux/80">
+            Depuis nos débuts, nous avons développé une plateforme moderne et intuitive permettant
+            aux utilisateurs de consulter les chambres disponibles, réserver rapidement et effectuer
+            leurs paiements en toute sécurité.
         </p>
 
-        <p class="mt-20">
-            Nous mettons un accent particulier sur la qualité du service, le confort des chambres
-            et la satisfaction de nos clients.
+        <p class="mt-6 text-lg leading-relaxed text-bordeaux/80">
+            Aujourd'hui, SoftHotel accompagne des milliers de clients satisfaits grâce à une
+            expérience haut de gamme, un service fiable et une attention particulière portée
+            au confort et à la satisfaction des voyageurs.
         </p>
+
     </div>
 
-    <div class="grid-3 mt-30">
+        <div>
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop"
+                 alt="Hôtel SoftHotel"
+                 class="w-full h-80 object-cover rounded-[2rem] shadow-2xl">
+        </div>
+    </div>
+</section>
+
+<section class="mt-16 bg-bordeaux-dark text-white rounded-[3rem] p-10 md:p-16 shadow-2xl border border-gold/30">
+    <h2 class="text-4xl font-black text-center mb-12">
+        SoftHotel en chiffres
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-center">
+
+        <div>
+            <div class="text-gold text-5xl mb-4">▣</div>
+
+            <h3 class="text-5xl font-black">
+                50K+
+            </h3>
+
+            <p class="mt-3 text-white/80">
+                Réservations
+            </p>
+        </div>
+
+        <div>
+            <div class="text-gold text-5xl mb-4">◉</div>
+
+            <h3 class="text-5xl font-black">
+                100K+
+            </h3>
+
+            <p class="mt-3 text-white/80">
+                Clients satisfaits
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Nos engagements</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
         <div class="card">
-            <h3>Notre mission</h3>
-            <p>Faciliter la réservation des chambres avec une interface claire et professionnelle.</p>
+            <h3 class="text-2xl font-black mb-3">
+                Notre mission
+            </h3>
+
+            <p>
+                Faciliter la réservation des chambres avec une interface claire et professionnelle.
+            </p>
         </div>
 
         <div class="card">
-            <h3>Notre vision</h3>
-            <p>Devenir une référence dans la gestion numérique des réservations des chambres d'hôtel.</p>
+            <h3 class="text-2xl font-black mb-3">
+                Notre vision
+            </h3>
+
+            <p>
+                Devenir une référence dans la gestion numérique des réservations des chambres d'hôtel.
+            </p>
         </div>
 
         <div class="card">
-            <h3>Nos valeurs</h3>
-            <p>Confiance, qualité, simplicité et satisfaction client.</p>
+            <h3 class="text-2xl font-black mb-3">
+                Nos valeurs
+            </h3>
+
+            <p>
+                Confiance, qualité, simplicité et satisfaction client.
+            </p>
         </div>
+
     </div>
 </section>
 {% endblock %}
