@@ -17,6 +17,8 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 RUN php -d memory_limit=-1 bin/console tailwind:build --env=prod || true
 
+RUN php bin/console importmap:install --env=prod || true
+
 RUN php bin/console asset-map:compile --env=prod || true
 
 RUN php bin/console cache:clear --env=prod --no-debug || true
