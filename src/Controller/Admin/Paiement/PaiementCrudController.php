@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Admin\Paiement;
 
 use App\Entity\Paiement;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 
 class PaiementCrudController extends AbstractCrudController
 {
@@ -20,9 +20,13 @@ class PaiementCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            IntegerField::new('montant'),
-            DateField::new('datePaiement'),
-            AssociationField::new('reservation'),
+
+            MoneyField::new('montant', 'Montant')
+                ->setCurrency('EUR'),
+
+            DateField::new('datePaiement', 'Date de paiement'),
+
+            AssociationField::new('reservation', 'Réservation'),
         ];
     }
 }

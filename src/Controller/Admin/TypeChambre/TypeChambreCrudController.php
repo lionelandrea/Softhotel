@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Admin\TypeChambre;
 
 use App\Entity\TypeChambre;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -19,9 +19,12 @@ class TypeChambreCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('nomType'),
-            IntegerField::new('prixParNuit'),
-            IntegerField::new('capaciteMax'),
+
+            TextField::new('nomType', 'Nom du type'),
+
+            IntegerField::new('prixParNuit', 'Prix par nuit'),
+
+            IntegerField::new('capaciteMax', 'Capacité maximale'),
         ];
     }
 }
