@@ -10,11 +10,14 @@ WORKDIR /app
 
 COPY . .
 
+ENV APP_ENV=prod
+ENV APP_DEBUG=0
+
 RUN composer install --no-dev --optimize-autoloader
 
-RUN php -d memory_limit=-1 bin/console tailwind:build || true
+RUN php -d memory_limit=-1 bin/console tailwind:build --env=prod || true
 
-RUN php bin/console cache:clear --env=prod || true
+RUN php bin/console cache:clear --env=prod --no-debug || true
 
 EXPOSE 10000
 
