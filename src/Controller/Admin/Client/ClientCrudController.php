@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Admin\Client;
 
 use App\Entity\Client;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -19,11 +19,11 @@ class ClientCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('nom'),
-            TextField::new('prenom'),
-            EmailField::new('email'),
-            TextField::new('telephone'),
-            TextField::new('motPasse')->hideOnIndex(),
+            TextField::new('nom', 'Nom'),
+            TextField::new('prenom', 'Prénom'),
+            EmailField::new('email', 'Email'),
+            TextField::new('telephone', 'Téléphone'),
+            TextField::new('motPasse', 'Mot de passe')->hideOnIndex(),
         ];
     }
 }
